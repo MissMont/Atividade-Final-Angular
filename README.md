@@ -1,5 +1,7 @@
 # AtividadeAngular
 
+![Tela Lista de Usuários](assets/Lista-Usuarios.png)
+
 # O que é uma rota dinâmica?
 
 Uma rota dinâmica é uma rota que contém parâmetros variáveis na URL, permitindo que o mesmo componente seja reutilizado para diferentes dados.
