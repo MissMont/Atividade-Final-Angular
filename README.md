@@ -15,9 +15,13 @@ No Angular, rotas são definidas no arquivo "app.routes.ts."
 
 O :id é um parâmetro dinâmico.
 Isso significa:
+
 /users/1
+
 /users/2
+
 /users/999
+
 Tudo isso vai carregar o mesmo componente, mas com valores diferentes.
 
 ```typescript
