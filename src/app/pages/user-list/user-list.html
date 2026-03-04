@@ -1,0 +1,31 @@
+<div class="page">
+
+  <h2>Lista de Usuários</h2>
+
+  <div *ngIf="users$ | async as users; else loadingTpl">
+
+    <div class="users-grid">
+
+      <div class="user-card" *ngFor="let user of users">
+
+        <div class="user-info">
+          <p class="name">{{ user.name }}</p>
+          <p class="email">{{ user.email }}</p>
+          <p class="city">📍 {{ user.address.city }}</p>
+        </div>
+
+        <a class="btn-details" [routerLink]="['/users', user.id]">
+          Ver detalhes
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="loading">Carregando usuários...</div>
+  </ng-template>
+
+</div>
