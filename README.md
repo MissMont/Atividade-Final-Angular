@@ -1,6 +1,10 @@
 # AtividadeAngular
 
+Preview Tela de Usuários
 ![Tela Lista de Usuários](assets/Lista-Usuarios.png)
+
+Preview Detalhes de Usuário
+![Tela Lista de Usuários](assets/Detalhe_Usuario.png)
 
 # O que é uma rota dinâmica?
 
