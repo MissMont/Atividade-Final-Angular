@@ -2,16 +2,24 @@
 
   <h2>Lista de Usuários</h2>
 
-  <div *ngIf="users$ | async as users; else loadingTpl">
+  <div *ngIf="carregando" class="loading">
+    Carregando usuários...
+  </div>
+
+  <div *ngIf="erro" class="error">
+    Erro ao carregar usuários. Tente novamente.
+  </div>
+
+  <div *ngIf="!carregando && !erro">
 
     <div class="users-grid">
 
-      <div class="user-card" *ngFor="let user of users">
+      <div class="user-card" *ngFor="let user of usuarios">
 
         <div class="user-info">
           <p class="name">{{ user.name }}</p>
           <p class="email">{{ user.email }}</p>
-          <p class="city">📍 {{ user.address.city }}</p>
+          <p class="city">{{ user.address.city }}</p>
         </div>
 
         <a class="btn-details" [routerLink]="['/users', user.id]">
@@ -23,9 +31,5 @@
     </div>
 
   </div>
-
-  <ng-template #loadingTpl>
-    <div class="loading">Carregando usuários...</div>
-  </ng-template>
 
 </div>

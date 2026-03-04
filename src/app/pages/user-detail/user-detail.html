@@ -2,54 +2,50 @@
 
   <h2>Detalhe do Usuário</h2>
 
-  <div *ngIf="invalidId" class="error">
-    ID inválido
+  <div *ngIf="carregando" class="loading">
+    Carregando...
   </div>
 
-  <div *ngIf="user$ | async as user; else loadingTpl">
+  <div *ngIf="erro" class="error">
+    ID inválido ou erro ao buscar usuário.
+  </div>
 
-    <div *ngIf="user; else notFoundTpl" class="detail-card">
+  <div *ngIf="!carregando && !erro && naoEncontrado" class="error">
+    Usuário não encontrado.
+  </div>
 
-      <div class="detail-row">
-        <span class="label">Nome</span>
-        <span>{{ user.name }}</span>
-      </div>
+  <div *ngIf="!carregando && !erro && user" class="detail-card">
 
-      <div class="detail-row">
-        <span class="label">Email</span>
-        <span>{{ user.email }}</span>
-      </div>
+    <div class="detail-row">
+      <span class="label">Nome</span>
+      <span>{{ user.name }}</span>
+    </div>
 
-      <div class="detail-row">
-        <span class="label">Telefone</span>
-        <span>{{ user.phone }}</span>
-      </div>
+    <div class="detail-row">
+      <span class="label">Email</span>
+      <span>{{ user.email }}</span>
+    </div>
 
-      <div class="detail-row">
-        <span class="label">Website</span>
-        <span>{{ user.website }}</span>
-      </div>
+    <div class="detail-row">
+      <span class="label">Telefone</span>
+      <span>{{ user.phone }}</span>
+    </div>
 
-      <div class="detail-row">
-        <span class="label">Cidade</span>
-        <span>{{ user.address.city }}</span>
-      </div>
+    <div class="detail-row">
+      <span class="label">Website</span>
+      <span>{{ user.website }}</span>
+    </div>
 
-      <div class="detail-row">
-        <span class="label">Empresa</span>
-        <span>{{ user.company.name }}</span>
-      </div>
+    <div class="detail-row">
+      <span class="label">Cidade</span>
+      <span>{{ user.address?.city }}</span>
+    </div>
 
+    <div class="detail-row">
+      <span class="label">Empresa</span>
+      <span>{{ user.company?.name }}</span>
     </div>
 
   </div>
-
-  <ng-template #loadingTpl>
-    <div class="loading">Carregando...</div>
-  </ng-template>
-
-  <ng-template #notFoundTpl>
-    <div class="error">Usuário não encontrado.</div>
-  </ng-template>
 
 </div>

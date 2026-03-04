@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Observable, switchMap, map, of } from 'rxjs';
 import { UserService } from '../../services/user';
 import { User } from '../../models/user';
 
@@ -10,36 +9,56 @@ import { User } from '../../models/user';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './user-detail.html',
-  styleUrls: ['./user-detail.css'] 
-
+  styleUrls: ['./user-detail.css']
 })
 export class UserDetail implements OnInit {
 
-  user$!: Observable<User | null>;
-  invalidId = false;
+  user!: User | null;
+  carregando = true;
+  erro = false;
+  naoEncontrado = false;
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
 
-    this.user$ = this.route.paramMap.pipe(
-      map(params => params.get('id')),
-      switchMap(idParam => {
+    this.route.paramMap.subscribe(params => {
 
-        const id = Number(idParam);
+      const idParam = params.get('id');
+      const id = Number(idParam);
 
-        if (!idParam || isNaN(id)) {
-          this.invalidId = true;
-          return of(null);
+
+      if (!idParam || isNaN(id)) {
+        this.erro = true;
+        this.carregando = false;
+        this.cdr.detectChanges();
+        return;
+      }
+
+      this.userService.buscarUsuarioPorId(id).subscribe({
+        next: (dados) => {
+
+          if (!dados) {
+            this.naoEncontrado = true;
+          } else {
+            this.user = dados;
+          }
+
+          this.carregando = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.erro = true;
+          this.carregando = false;
+          this.cdr.detectChanges();
         }
+      });
 
-        return this.userService.buscarUsuarioPorId(id);
-      })
-    );
+    });
 
   }
-
 }
